@@ -3,20 +3,18 @@ import './movieContent.css';
 import titleImg from '../images/transformer-title.png';
 import Button from './Button';
 
-function MovieContent() {
+function MovieContent({ movie }) {
   return (
-    <div className="content active">
-        <img src={titleImg} alt="Movie Title" className="movie-title"/>
+    <div className={`content ${movie.active ? 'active' : undefined}`}>
+        <img src={movie.titleImg} alt="Movie Title" className="movie-title"/>
             <h4>
-                <span>Year</span>
-                <span><i>age</i></span>
-                <span>length</span>
-                <span>category</span>
+                <span>{movie.year}</span>
+                <span><i>{movie.ageLimit}</i></span>
+                <span>{movie.length}</span>
+                <span>{movie.category}</span>
             </h4>
-                <p>This is the description of the movie here so we'll inform you 
-                    according as we go on in the movie application here. For the best movies that you would want to watch for the rest of your life.
-                    Filmpire is here for the best of the best that you could enjoy quite well.
-                    And you could role with it when chilling and sipping on your wine.
+                <p>
+                  {movie.description}
                 </p>
             <div className="button"> 
                <Button 
