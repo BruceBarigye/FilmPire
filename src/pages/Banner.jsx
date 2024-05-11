@@ -22,7 +22,14 @@ function Banner() {
         }, []);
 
         const handleSlideChange = id => {
-            console.log(id);
+            const newMovies = movies.map(movie=>{
+                movie.active = false;
+                if(movie._id===id){
+                    movie.active = true;
+                }
+                return movie;
+            });
+            setMovies(newMovies);
         };
 
 
