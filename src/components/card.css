@@ -10,10 +10,10 @@ section .movie-card {
 section .movie-card::before {
     position: absolute;
     content: '';
-    top: o;
+    top: 0;
     left: 0;
     right: 0;
-    bottom: o;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     opacity: 0;
     visibility: hidden;
@@ -63,7 +63,7 @@ section .movie-card .content h4::before {
     height: 5px;
     width: 80%;
     background: linear-gradient(
-        90deg
+        90deg,
         var(--primary),
         var(--primary),
         transparent

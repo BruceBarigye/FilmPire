@@ -3,8 +3,43 @@ import './schedule.css';
 import Card from '../components/Card';
 
 function Schedule() {
-    const [data, setData] =useState([])
-    const [movies, setMovies] =useState([])
+    const filterList = [
+       {
+        _id: 1,
+        name: 'All',
+        active: true,
+       },
+       {
+        _id: 2,
+        name: 'Romance',
+        active: false,
+       },
+       {
+        _id: 3,
+        name: 'Action',
+        active: false,
+       },
+       {
+        _id: 4,
+        name: 'Thriller',
+        active: false,
+       },
+       {
+        _id: 5,
+        name: 'Horror',
+        active: false,
+       },
+       {
+        _id: 6,
+        name: 'Adventure',
+        active: false,
+       },
+    ];
+
+
+    const [data, setData] = useState([])
+    const [movies, setMovies] = useState([])
+    const [filters, setFilters] = useState(filterList)
 
     const fetchData = () => {
         fetch('http://localhost:3000/data/movieData.json')
@@ -13,13 +48,32 @@ function Schedule() {
         .catch(e => console.log(e.message));
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         fetchData();
     }, []);
 
-    useEffect(() =>{
+    useEffect(() => {
         setMovies(data);
-    });
+    },[data]);
+
+    const handleFilterMovies = category => {
+        setFilters(
+            filters.map(filter => {
+                filter.active = false;
+                if(filter.name === category) {
+                    filter.active = true;
+                }
+                return filter;
+            })
+        );
+
+
+        if(category === 'All') {
+            setMovies(data);
+            return;
+        }
+        setMovies(data.filter(movie => movie.category === category));
+    };
 
   return (
     <section id="schedule" className="schedule">
@@ -27,10 +81,18 @@ function Schedule() {
             <div className="row">
                 <h4 className="section-title">Coming as soon as next week</h4>
             </div>
-            <div className="row">
-                <div className="filters">
-                    <p>Filters</p>
-                </div>
+            <div className="row">   
+                <ul className="filters">
+                    {
+                        filters.map(filter => (
+                            <li key={filter._id} 
+                            className={`${filter.active ? 'active' : undefined}`}
+                            onClick={() => {handleFilterMovies(filter.name);
+                            }}>{filter.name}</li>
+                        ))
+                    }
+                </ul>
+                    
             </div>
             <row className="row mt-5">
                 {movies && movies.length> 0 && 
@@ -41,4 +103,4 @@ function Schedule() {
   )
 }
 
-export default Schedule;
+export default Schedule; 
